@@ -4,6 +4,16 @@ from pythonforandroid import logger
 
 from os.path import join
 from os import chmod, stat
+from os import walk
+
+def fix_perm(path):
+    chmod(path, stat(path).st_mode | 0o200)
+
+def fix_perms(root):
+    fix_perm(root)
+    for dirpath, dirnames, filenames in walk(root):
+        for fname in filenames:
+            fix_perm(join(dirpath, fname))
 
 class AndroidRecipe(IncludedFilesBehaviour, CythonRecipe):
     # name = 'android'
@@ -57,8 +67,7 @@ class AndroidRecipe(IncludedFilesBehaviour, CythonRecipe):
         }
 
         # create config files for Cython, C and Python
-        build_dir = self.get_build_dir(arch.arch)
-        chmod(build_dir, stat(build_dir).st_mode | 0o200)
+        fix_perms(self.get_build_dir(arch.arch))
         with (
                 current_directory(build_dir)), (
                 open(join('android', 'config.pxi'), 'w')) as fpxi, (
