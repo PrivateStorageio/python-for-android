@@ -68,7 +68,8 @@ class AndroidRecipe(IncludedFilesBehaviour, CythonRecipe):
         }
 
         # create config files for Cython, C and Python
-        fix_perms(self.get_build_dir(arch.arch))
+        build_dir = self.get_build_dir(arch.arch)
+        fix_perms(build_dir)
         with (
                 current_directory(build_dir)), (
                 open(join('android', 'config.pxi'), 'w')) as fpxi, (
