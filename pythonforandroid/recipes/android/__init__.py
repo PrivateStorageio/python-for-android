@@ -13,7 +13,7 @@ def fix_perms(root):
     logger.info(f'fixing perms on tree at {root}')
     fix_perm(root)
     for dirpath, dirnames, filenames in walk(root):
-        for fname in filenames:
+        for fname in dirnames + filenames:
             fix_perm(join(dirpath, fname))
 
 class AndroidRecipe(IncludedFilesBehaviour, CythonRecipe):
