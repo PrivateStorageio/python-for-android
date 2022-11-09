@@ -60,7 +60,7 @@ class AndroidRecipe(IncludedFilesBehaviour, CythonRecipe):
         build_dir = self.get_build_dir(arch.arch)
         chmod(build_dir, stat(build_dir).st_mode | 0o200)
         with (
-                current_directory(build_dir), (
+                current_directory(build_dir)), (
                 open(join('android', 'config.pxi'), 'w')) as fpxi, (
                 open(join('android', 'config.h'), 'w')) as fh, (
                 open(join('android', 'config.py'), 'w')) as fpy:
