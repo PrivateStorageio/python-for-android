@@ -10,6 +10,7 @@ def fix_perm(path):
     chmod(path, stat(path).st_mode | 0o200)
 
 def fix_perms(root):
+    logger.info(f'fixing perms on tree at {root}')
     fix_perm(root)
     for dirpath, dirnames, filenames in walk(root):
         for fname in filenames:
